@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบคำนวณค่าทดสอบซ้ำได้ (Repeatability Test Calculator)</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,7 +14,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'IBM Plex Sans Thai', sans-serif;
             background: linear-gradient(135deg, #f8fffe 0%, #e8f8f5 100%);
             min-height: 100vh;
             color: #2d5449;
@@ -117,12 +118,12 @@
         }
 
         .group-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             padding: 25px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(168, 230, 207, 0.2);
+            border: 1px solid rgba(168, 230, 207, 0.3);
             transition: all 0.3s ease;
         }
 
@@ -136,7 +137,7 @@
             align-items: center;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #e8f8f5;
+            border-bottom: 2px solid #d4f1e4;
         }
 
         .group-icon {
@@ -163,7 +164,7 @@
         .test-item {
             margin-bottom: 15px;
             padding: 15px;
-            background: rgba(248, 255, 254, 0.8);
+            background: rgba(225, 243, 234, 0.9);
             border-radius: 15px;
             border-left: 4px solid #a8e6cf;
             transition: all 0.3s ease;
@@ -175,7 +176,7 @@
         }
 
         .test-item:hover {
-            background: rgba(168, 230, 207, 0.15);
+            background: rgba(168, 230, 207, 0.25);
             transform: translateX(5px);
             box-shadow: 0 4px 15px rgba(168, 230, 207, 0.2);
         }
@@ -216,9 +217,9 @@
         }
 
         .sheet-btn {
-            background: rgba(168, 230, 207, 0.2);
-            color: #7fcdcd;
-            border: 1px solid rgba(127, 205, 205, 0.3);
+            background: rgba(168, 230, 207, 0.3);
+            color: #5fa082;
+            border: 1px solid rgba(127, 205, 205, 0.4);
             padding: 6px 8px;
             font-size: 12px;
             min-width: auto;
@@ -226,9 +227,9 @@
         }
 
         .sheet-btn:hover {
-            background: rgba(168, 230, 207, 0.4);
+            background: rgba(168, 230, 207, 0.5);
             transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(168, 230, 207, 0.3);
+            box-shadow: 0 2px 8px rgba(168, 230, 207, 0.4);
         }
 
         .sheet-btn i {
