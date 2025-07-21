@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบคำนวณค่าทดสอบซ้ำได้ (Repeatability Test Calculator)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f8f5 100%);
+            min-height: 100vh;
+            color: #2d5449;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #a8e6cf 0%, #7fcdcd 100%);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: none;
+            border-radius: 50px;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            color: #2d5449;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 8px 30px rgba(168, 230, 207, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7fcdcd;
+            font-size: 18px;
+        }
+
+        /* Database Button */
+        .database-btn {
+            display: block;
+            max-width: 300px;
+            margin: 0 auto 40px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #88d8a3 0%, #7fcdcd 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(136, 216, 163, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .database-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(136, 216, 163, 0.4);
+        }
+
+        .database-btn i {
+            margin-right: 10px;
+        }
+
+        /* Group Cards */
+        .groups-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .group-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(168, 230, 207, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .group-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .group-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e8f8f5;
+        }
+
+        .group-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #a8e6cf 0%, #7fcdcd 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .group-title {
+            font-size: 1.5rem;
+            color: #2d5449;
+            font-weight: 600;
+        }
+
+        /* Test Items */
+        .test-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(248, 255, 254, 0.8);
+            border-radius: 15px;
+            border-left: 4px solid #a8e6cf;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .test-item:hover {
+            background: rgba(168, 230, 207, 0.15);
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(168, 230, 207, 0.2);
+        }
+
+        .test-content {
+            flex: 1;
+        }
+
+        .test-name {
+            font-weight: 600;
+            color: #2d5449;
+            margin-bottom: 0;
+            font-size: 1.1rem;
+        }
+
+        .test-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .test-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .app-btn {
+            display: none; /* ซ่อนปุ่มเปิดแอป */
+        }
+
+        .sheet-btn {
+            background: rgba(168, 230, 207, 0.2);
+            color: #7fcdcd;
+            border: 1px solid rgba(127, 205, 205, 0.3);
+            padding: 6px 8px;
+            font-size: 12px;
+            min-width: auto;
+            border-radius: 8px;
+        }
+
+        .sheet-btn:hover {
+            background: rgba(168, 230, 207, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(168, 230, 207, 0.3);
+        }
+
+        .sheet-btn i {
+            font-size: 14px;
+        }
+
+        /* Hidden class for search */
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .groups-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .test-buttons {
+                flex-direction: column;
+            }
+
+            .test-btn {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 30px 15px;
+                margin-bottom: 30px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .group-card {
+                padding: 20px;
+            }
+
+            .search-input {
+                padding: 12px 45px 12px 15px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* No results message */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #7fcdcd;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-calculator"></i> ระบบคำนวณค่าทดสอบซ้ำได้</h1>
+            <p>Repeatability Test Calculator System</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="ค้นหาเมธอดการทดสอบ..." id="searchInput">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+
+
+
+        <!-- Groups Container -->
+        <div class="groups-container" id="groupsContainer">
+            <!-- Group B1 -->
+            <div class="group-card" data-group="B1">
+                <div class="group-header">
+                    <div class="group-icon">B1</div>
+                    <h2 class="group-title">กลุ่มงาน B1</h2>
+                </div>
+                <div class="test-item" data-search="density d4052" onclick="openApp('https://script.google.com/macros/s/AKfycbyRXOSgJZGXrD6pHYd_guSv1LAJGnX5SJrm99TxaGBH7E9I_LhclatyOt-z84Jg061L0g/exec')">
+                    <div class="test-content">
+                        <div class="test-name">Density D4052</div>
+                    </div>
+                    <div class="test-buttons">
+                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('Density-D4052 repeatability')" title="เปิด Google Sheet">
+                            <i class="fas fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="test-item" data-search="rvp" onclick="openApp('https://script.google.com/macros/s/AKfycbyrFXswqzHnfedFgYHELMkBHX6cHzheqgo_FZ_70iomjtE08VxWE6eB4CpbEXnZrScU/exec')">
+                    <div class="test-content">
+                        <div class="test-name">RVP</div>
+                    </div>
+                    <div class="test-buttons">
+                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('RVP repeatability')" title="เปิด Google Sheet">
+                            <i class="fas fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Group B2 -->
+            <div class="group-card" data-group="B2">
+                <div class="group-header">
+                    <div class="group-icon">B2</div>
+                    <h2 class="group-title">กลุ่มงาน B2</h2>
+                </div>
+                <div class="test-item" data-search="fp d93" onclick="openApp('https://script.google.com/macros/s/AKfycbyXcZGVHbZiBJffYmESnStiU5WCGj0KLX9ZF--8fEXtYl8-_f34Fo3YTrsn19Vx7yY/exec')">
+                    <div class="test-content">
+                        <div class="test-name">FP D93</div>
+                    </div>
+                    <div class="test-buttons">
+                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('FP-D93 repeatability')" title="เปิด Google Sheet">
+                            <i class="fas fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="test-item" data-search="fp d7236" onclick="openApp('https://script.google.com/macros/s/AKfycbzcPojaWTiWg3gsELsPLAnInEcTb9sq8aUqqmKIPugtpiUkGttXx78UGXsPXx4EIiMelw/exec')">
+                    <div class="test-content">
+                        <div class="test-name">FP-D7236</div>
+                    </div>
+                    <div class="test-buttons">
+                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('FP-D7236 repeatability')" title="เปิด Google Sheet">
+                            <i class="fas fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Group B4 -->
+            <div class="group-card" data-group="B4">
+                <div class="group-header">
+                    <div class="group-icon">B4</div>
+                    <h2 class="group-title">กลุ่มงาน B4</h2>
+                </div>
+                <div class="test-item" data-search="viscosity d445" onclick="openApp('https://script.google.com/macros/s/AKfycbysL0WfL6kJFEhQjcu6HsA4rilZAH5fcRRGPzDQ7rx-_s9RXJ9lnH5k-646C9mQmpkN/exec')">
+                    <div class="test-content">
+                        <div class="test-name">Viscosity-D445</div>
+                    </div>
+                    <div class="test-buttons">
+                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('Viscosity-D445 repeatability')" title="เปิด Google Sheet">
+                            <i class="fas fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Group A2 -->
+            <div class="group-card" data-group="A2">
+                <div class="group-header">
+                    <div class="group-icon">A2</div>
+                    <h2 class="group-title">กลุ่มงาน A2</h2>
+                </div>
+                <div class="test-item" data-search="fame en14078" onclick="openApp('https://script.google.com/macros/s/AKfycbw-eMuRd9JIwtW4WEiLGU67Q5gobBG3QHgvsYRsE-lZScDay1LC0V6HeEU4dAh0KqxM/exec')">
+                    <div class="test-content">
+                        <div class="test-name">FAME-EN14078</div>
+                    </div>
+                    <div class="test-buttons">
+                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('FAME-EN14078 repeatability')" title="เปิด Google Sheet">
+                            <i class="fas fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="test-item" data-search="oxidation bsen14112" onclick="openApp('https://script.google.com/macros/s/AKfycbwrlWyr7d8vkqhIUyck9BPmbIP5dBeJ0p5WIgQBJ9dgqqfaMELuTVoQzohqTrN6lisUDw/exec')">
+                    <div class="test-content">
+                        <div class="test-name">Oxidation-BSEN14112</div>
+                    </div>
+                    <div class="test-buttons">
+                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('Oxidation-BSEN14112 repeatability')" title="เปิด Google Sheet">
+                            <i class="fas fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="test-item" data-search="sulfur d2622" onclick="openApp('https://script.google.com/macros/s/AKfycby8FKQK0P4X7N6PLQ6DvRmgG0wqFOIZbe1ncxx9WQl1-kE6HB1iid7Rbs1JpVM2-Z6X/exec')">
+                    <div class="test-content">
+                        <div class="test-name">Sulfur-D2622</div>
+                    </div>
+                    <div class="test-buttons">
+                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('Sulfur-D2622 repeatability')" title="เปิด Google Sheet">
+                            <i class="fas fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Group A3 -->
+            <div class="group-card" data-group="A3">
+                <div class="group-header">
+                    <div class="group-icon">A3</div>
+                    <h2 class="group-title">กลุ่มงาน A3</h2>
+                </div>
+                <div class="test-item" data-search="etoh d4815" onclick="openApp('https://script.google.com/macros/s/AKfycbzzYF7qevxjlLfK8IroifxL-x90_J2h92QQxw9431v2P6fR55PddLH086sCghcqqLqH/exec')">
+                    <div class="test-content">
+                        <div class="test-name">EtOH-D4815</div>
+                    </div>
+                    <div class="test-buttons">
+                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('EtOH-D4815 repeatability')" title="เปิด Google Sheet">
+                            <i class="fas fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="test-item" data-search="water gas e203" onclick="openApp('https://script.google.com/macros/s/AKfycbwOAonG7-btvcrGCUtb5WsflpCoF4cFaSVHlvdflBEnX3HplzQfj-3GfWFdooC8k0Z8/exec')">
+                    <div class="test-content">
+                        <div class="test-name">Water GAS E203</div>
+                    </div>
+                    <div class="test-buttons">
+                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('Water-GAS-E203 repeatability')" title="เปิด Google Sheet">
+                            <i class="fas fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="test-item" data-search="water hsd eniso12937" onclick="openApp('https://script.google.com/macros/s/AKfycbyH8_2FG159hZ1yN9k4mEyvxjAqHpiHhdDSW31-IafVW8RWcglkIKpqtsED_aBsl_uBdw/exec')">
+                    <div class="test-content">
+                        <div class="test-name">Water HSD ENISO12937</div>
+                    </div>
+                    <div class="test-buttons">
+                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('Water-HSD-ENISO 12937 repeatability')" title="เปิด Google Sheet">
+                            <i class="fas fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="noResults">
+            <i class="fas fa-search-minus"></i>
+            <div>ไม่พบผลการค้นหาที่ตรงกัน</div>
+            <small>ลองใช้คำค้นหาอื่น หรือตรวจสอบการสะกดอีกครั้ง</small>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const groupsContainer = document.getElementById('groupsContainer');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            const groupCards = document.querySelectorAll('.group-card');
+            let hasVisibleResults = false;
+
+            groupCards.forEach(card => {
+                const testItems = card.querySelectorAll('.test-item');
+                let hasVisibleTests = false;
+
+                testItems.forEach(item => {
+                    const searchData = item.getAttribute('data-search');
+                    const testName = item.querySelector('.test-name').textContent.toLowerCase();
+                    const groupName = card.getAttribute('data-group').toLowerCase();
+                    
+                    const isMatch = searchData.includes(searchTerm) || 
+                                   testName.includes(searchTerm) || 
+                                   groupName.includes(searchTerm);
+
+                    if (isMatch) {
+                        item.style.display = 'block';
+                        hasVisibleTests = true;
+                        hasVisibleResults = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                if (hasVisibleTests || searchTerm === '') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+
+                if (searchTerm === '') {
+                    testItems.forEach(item => {
+                        item.style.display = 'block';
+                    });
+                    hasVisibleResults = true;
+                }
+            });
+
+            // Show/hide no results message
+            if (hasVisibleResults || searchTerm === '') {
+                noResults.style.display = 'none';
+                groupsContainer.style.display = 'grid';
+            } else {
+                noResults.style.display = 'block';
+                groupsContainer.style.display = 'none';
+            }
+        });
+
+        // Function to open app
+        function openApp(url) {
+            window.open(url, '_blank');
+        }
+
+        // Google Sheets function
+        function openGoogleSheet(sheetName) {
+            // สร้าง URL สำหรับค้นหา Google Sheets
+            const searchQuery = encodeURIComponent(sheetName);
+            const googleSheetsUrl = `https://docs.google.com/spreadsheets/u/0/?q=${searchQuery}`;
+            window.open(googleSheetsUrl, '_blank');
+        }
+
+        // Database button functionality
+
+        // Smooth scroll to top when clicking header
+        document.querySelector('.header').addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Add loading animation to test items on click
+        document.querySelectorAll('.test-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Add subtle loading effect
+                this.style.opacity = '0.7';
+                this.style.transform = 'translateX(5px) scale(0.98)';
+                
+                setTimeout(() => {
+                    this.style.opacity = '1';
+                    this.style.transform = 'translateX(0) scale(1)';
+                }, 200);
+            });
+        });
+
+        // Add hover effect animations
+        document.querySelectorAll('.test-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(5px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Focus search with Ctrl+F or Cmd+F
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                searchInput.focus();
+                searchInput.select();
+            }
+            
+            // Clear search with Escape
+            if (e.key === 'Escape' && document.activeElement === searchInput) {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+            }
+        });
+
+        // Add tooltips for better UX
+        document.querySelectorAll('.test-item').forEach(item => {
+            item.title = 'คลิกเพื่อเปิดแอปพลิเคชันคำนวณค่าทดสอบ';
+        });
+
+        document.querySelectorAll('.sheet-btn').forEach(btn => {
+            btn.title = 'เปิด Google Sheets สำหรับดูข้อมูล';
+        });
+
+        // PWA-like features - Add to home screen prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            deferredPrompt = e;
+        });
+
+        // Responsive grid adjustment
+        function adjustGrid() {
+            const container = document.querySelector('.groups-container');
+            const cards = document.querySelectorAll('.group-card:not([style*="display: none"])');
+            
+            if (window.innerWidth <= 480 && cards.length === 1) {
+                container.style.gridTemplateColumns = '1fr';
+            }
+        }
+
+        window.addEventListener('resize', adjustGrid);
+        searchInput.addEventListener('input', () => setTimeout(adjustGrid, 100));
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add fade-in animation
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+
+            // Focus on search input
+            searchInput.focus();
+        });
+    </script>
+</body>
+</html>
