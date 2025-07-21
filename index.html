@@ -196,6 +196,7 @@
             display: flex;
             gap: 10px;
             align-items: center;
+            margin-left: 15px;
         }
 
         .test-btn {
@@ -220,10 +221,11 @@
             background: rgba(168, 230, 207, 0.3);
             color: #5fa082;
             border: 1px solid rgba(127, 205, 205, 0.4);
-            padding: 6px 8px;
+            padding: 8px 10px;
             font-size: 12px;
             min-width: auto;
-            border-radius: 8px;
+            border-radius: 10px;
+            position: relative;
         }
 
         .sheet-btn:hover {
@@ -233,7 +235,27 @@
         }
 
         .sheet-btn i {
-            font-size: 14px;
+            font-size: 16px;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .test-item {
+                padding: 12px 15px;
+            }
+            
+            .test-buttons {
+                margin-left: 10px;
+            }
+            
+            .sheet-btn {
+                padding: 10px 12px;
+                border-radius: 12px;
+            }
+            
+            .sheet-btn i {
+                font-size: 18px;
+            }
         }
 
         /* Hidden class for search */
