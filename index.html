@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบคำนวณค่าทดสอบซ้ำได้ (Repeatability Test Calculator)</title>
+    <title>ระบบคำนวณค่าการทดสอบซ้ำ (Repeatability Test Calculator)</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -350,13 +350,13 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1><i class="fas fa-calculator"></i> ระบบคำนวณค่าทดสอบซ้ำได้</h1>
+            <h1><i class="fas fa-calculator"></i> ระบบคำนวณค่าการทดสอบซ้ำ</h1>
             <p>Repeatability Test Calculator System</p>
         </div>
 
         <!-- Search Bar -->
         <div class="search-container">
-            <input type="text" class="search-input" placeholder="ค้นหาเมธอดการทดสอบ..." id="searchInput">
+            <input type="text" class="search-input" placeholder="ค้นหาชื่อการทดสอบ..." id="searchInput">
             <i class="fas fa-search search-icon"></i>
         </div>
 
@@ -375,7 +375,7 @@
                         <div class="test-name">Density D4052</div>
                     </div>
                     <div class="test-buttons">
-                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('Density-D4052 repeatability')" title="เปิด Google Sheet">
+                        <a href="#" class="test-btn sheet-btn" onclick="openApp('https://docs.google.com/spreadsheets/d/1MP8YC6YXRNkb3TAzCn6CYnP_gMr8apd30If9y8og6Hs/edit?usp=drive_link')" title="เปิด Google Sheet">
                             <i class="fas fa-table"></i>
                         </a>
                     </div>
@@ -385,7 +385,7 @@
                         <div class="test-name">RVP</div>
                     </div>
                     <div class="test-buttons">
-                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('RVP repeatability')" title="เปิด Google Sheet">
+                        <a href="#" class="test-btn sheet-btn" onclick="openApp('https://docs.google.com/spreadsheets/d/1GfRUGa1J35ikWX-7d8VqPR7jwrG_gg5NGzHtkmIbILY/edit?usp=sharing')" title="เปิด Google Sheet">
                             <i class="fas fa-table"></i>
                         </a>
                     </div>
@@ -403,7 +403,7 @@
                         <div class="test-name">FP D93</div>
                     </div>
                     <div class="test-buttons">
-                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('FP-D93 repeatability')" title="เปิด Google Sheet">
+                        <a href="#" class="test-btn sheet-btn" onclick="openApp('https://docs.google.com/spreadsheets/d/1Mc7v0RLlifc-ALsXhS3wIBxphiX3QhPY34nEREAkZQs/edit?usp=sharing')" title="เปิด Google Sheet">
                             <i class="fas fa-table"></i>
                         </a>
                     </div>
@@ -413,7 +413,35 @@
                         <div class="test-name">FP-D7236</div>
                     </div>
                     <div class="test-buttons">
-                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('FP-D7236 repeatability')" title="เปิด Google Sheet">
+                        <a href="#" class="test-btn sheet-btn" onclick="openApp('https://docs.google.com/spreadsheets/d/1vFKLetpmPl7gzRupnMHNO0l4S50sJtFeAmaBrZpcOhg/edit?usp=sharing')" title="เปิด Google Sheet">
+                            <i class="fas fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Group B3 -->
+            <div class="group-card" data-group="B3">
+                <div class="group-header">
+                    <div class="group-icon">B3</div>
+                    <h2 class="group-title">กลุ่มงาน B3</h2>
+                </div>
+                <div class="test-item" data-search="Dis Auto V1" onclick="openApp('https://script.google.com/a/macros/pt.co.th/s/AKfycbwrUlH-HZHAZtoTnM84FA5_uJHLTsB5ZFY4k4qL5CT4MBG9L8pdMVvCnypW1jFosQTy/exec')">
+                    <div class="test-content">
+                        <div class="test-name">Dis Auto V1</div>
+                    </div>
+                    <div class="test-buttons">
+                        <a href="#" class="test-btn sheet-btn" onclick="openApp('https://docs.google.com/spreadsheets/d/1sglBSeYnU9h8i9iBvahRAuLYN97O6s9hHdFBoBLuan4/edit?usp=sharing')" title="เปิด Google Sheet">
+                            <i class="fas fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="test-item" data-search="Dis Auto V2" onclick="openApp('')">
+                    <div class="test-content">
+                        <div class="test-name">Dis Auto V2 ยังไม่เปิดใช้งาน</div>
+                    </div>
+                    <div class="test-buttons">
+                        <a href="#" class="test-btn sheet-btn" onclick="openApp('')" title="เปิด Google Sheet">
                             <i class="fas fa-table"></i>
                         </a>
                     </div>
@@ -431,7 +459,7 @@
                         <div class="test-name">Viscosity-D445</div>
                     </div>
                     <div class="test-buttons">
-                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('Viscosity-D445 repeatability')" title="เปิด Google Sheet">
+                        <a href="#" class="test-btn sheet-btn" onclick="openApp('https://docs.google.com/spreadsheets/d/1ABRj4pYDx9VXXfRBQlmxBC_S-0kuXCRAt6B0P5bT4ac/edit?usp=sharing')" title="เปิด Google Sheet">
                             <i class="fas fa-table"></i>
                         </a>
                     </div>
@@ -449,7 +477,7 @@
                         <div class="test-name">FAME-EN14078</div>
                     </div>
                     <div class="test-buttons">
-                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('FAME-EN14078 repeatability')" title="เปิด Google Sheet">
+                        <a href="#" class="test-btn sheet-btn" onclick="openApp('https://docs.google.com/spreadsheets/d/1-9SC-uq9NrrZh9PbCJmH3j6es36SUkDiKxDdbFXv_ng/edit?usp=sharing')" title="เปิด Google Sheet">
                             <i class="fas fa-table"></i>
                         </a>
                     </div>
@@ -459,7 +487,7 @@
                         <div class="test-name">Oxidation-BSEN14112</div>
                     </div>
                     <div class="test-buttons">
-                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('Oxidation-BSEN14112 repeatability')" title="เปิด Google Sheet">
+                        <a href="#" class="test-btn sheet-btn" onclick="openApp('https://docs.google.com/spreadsheets/d/1ga2LmVizuXIMuIImkezFQ1OLqzcfgIHEZ5FlFDtcZtE/edit?usp=sharing')" title="เปิด Google Sheet">
                             <i class="fas fa-table"></i>
                         </a>
                     </div>
@@ -469,7 +497,7 @@
                         <div class="test-name">Sulfur-D2622</div>
                     </div>
                     <div class="test-buttons">
-                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('Sulfur-D2622 repeatability')" title="เปิด Google Sheet">
+                        <a href="#" class="test-btn sheet-btn" onclick="openApp('https://docs.google.com/spreadsheets/d/1tmKYdY5PKvBNZHiZkPSmpTAQKBuhdIsy00phUyKNVuU/edit?usp=sharing')" title="เปิด Google Sheet">
                             <i class="fas fa-table"></i>
                         </a>
                     </div>
@@ -487,7 +515,7 @@
                         <div class="test-name">EtOH-D4815</div>
                     </div>
                     <div class="test-buttons">
-                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('EtOH-D4815 repeatability')" title="เปิด Google Sheet">
+                        <a href="#" class="test-btn sheet-btn" onclick="openApp('https://docs.google.com/spreadsheets/d/1JXIgmiI33AIAcORqy6tolkacuqgS7icTpIkrBJvyUfA/edit?usp=sharing')" title="เปิด Google Sheet">
                             <i class="fas fa-table"></i>
                         </a>
                     </div>
@@ -497,7 +525,7 @@
                         <div class="test-name">Water GAS E203</div>
                     </div>
                     <div class="test-buttons">
-                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('Water-GAS-E203 repeatability')" title="เปิด Google Sheet">
+                        <a href="#" class="test-btn sheet-btn" onclick="openApp('https://docs.google.com/spreadsheets/d/1R-Ti70FBadYbWBY9Iy3uxblLLWYNNAmz-6-mYz6XPaA/edit?usp=sharing')" title="เปิด Google Sheet">
                             <i class="fas fa-table"></i>
                         </a>
                     </div>
@@ -507,7 +535,7 @@
                         <div class="test-name">Water HSD ENISO12937</div>
                     </div>
                     <div class="test-buttons">
-                        <a href="#" class="test-btn sheet-btn" onclick="event.stopPropagation(); openGoogleSheet('Water-HSD-ENISO 12937 repeatability')" title="เปิด Google Sheet">
+                        <a href="#" class="test-btn sheet-btn" onclick="openApp('https://docs.google.com/spreadsheets/d/107oCwJRTl8WiDbAdh07KtVFoV_V9749Os0OoMe50EE0/edit?usp=sharing')" title="เปิด Google Sheet">
                             <i class="fas fa-table"></i>
                         </a>
                     </div>
